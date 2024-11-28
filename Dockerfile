@@ -27,5 +27,3 @@ EXPOSE 8080
 
 # Définir un volume pour la persistance
 VOLUME ["/app/data"]
-
-USER jenkins
