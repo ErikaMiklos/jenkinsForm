@@ -5,8 +5,12 @@ pipeline {
         maven 'Maven 3.8.1'
     }
 
+    parameters {
+        string(name: 'repositorydocker', defaultValue: 'vanessakovalsky', description:'Votre repository sur le hub docker')
+    }
+
     environment {
-        DOCKER_IMAGE = "vanessakovalsky/mon-application-java"
+        DOCKER_IMAGE = "${params.repositorydocker}/mon-application-java"
         DOCKER_TAG = "${env.BUILD_NUMBER}"
         registryCredential = 'docker'
     }
