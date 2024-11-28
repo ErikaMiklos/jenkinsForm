@@ -67,6 +67,17 @@ pipeline {
                 sh 'echo "Déploiement du projet"'
             }
         }
+        
+
+        // stage("SSH Steps Rocks!") {
+        //     steps {
+        //         withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+        //         remote.user = userName
+        //         remote.identityFile = identity
+        //         sshCommand remote: remote, command: 'docker pull monimage; docker run --name monapp monimage'
+        //         }
+        //     }
+        // }
     }
 
     post {
