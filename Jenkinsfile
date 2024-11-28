@@ -5,6 +5,11 @@ pipeline {
         maven 'Maven 3.8.1'
     }
 
+    environnement {
+        DOCKER_IMAGE = "vanessakovalsky/mon-application-java"
+        DOCKER_TAG = "${env.BUILD_NUMBER}"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -31,9 +36,18 @@ pipeline {
             }
         }
 
-        stage('Package') {
+        // stage('Package') {
+        //     steps {
+        //         sh 'mvn package -DskipTests=true'
+        //     }
+        // }
+
+        stage('Build Docker Image') {
             steps {
-                sh 'mvn package -DskipTests=true'
+                script {
+                    // Construction de l'image Docker
+                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                }
             }
         }
 
