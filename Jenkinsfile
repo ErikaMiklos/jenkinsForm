@@ -8,6 +8,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "vanessakovalsky/mon-application-java"
         DOCKER_TAG = "${env.BUILD_NUMBER}"
+        registryCredential = 'docker'
     }
 
     stages {
@@ -46,7 +47,16 @@ pipeline {
             steps {
                 script {
                     // Construction de l'image Docker
-                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                    dockerImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                }
+            }
+        }
+        stage('Push Image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push("$BUILD_NUMBER")
+                    }
                 }
             }
         }
